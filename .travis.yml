@@ -1,0 +1,19 @@
+env:
+  global:
+  - GH_USER_NAME="conor123"
+  - GH_USER_EMAIL="conor@conorryan.ie"
+  - GH_REPO="conor123/t2"
+  - secure: Aa390jiXx1ivybVbFpEM1nRX2U7CWDeqgdUJD2gVjhaog/wxteF3mwM3huXoIX7V1VC2bAAmYClAsoeeMwLkIotlbGike9eqpRIMwVRpVGAztPwhvbpKZ6O8OYcyiLURosfbouy0vMHeC9KZqtFZqgTx//NVibCdfDGIRu1RCpSmicKC1RydIH87uyDzxUAC/to50H2VZXm5hC+aM0AEO3eERohMC/akUy3dR2vTtz5CrP5DplcSsQbcVuN8ZbbH4lRhpPXBFxyIOBbI/fYQulF3ds8G9SrSpRw7plD59MH+ovpricSsnVNhWHsvK6xEYmREoZZz2cv/BdhW5dSng3myod6pwUQ0UtdFWdh5IX0YfOS2uR5hNGfy8mdJFg6LXrbiYY+ty0l0g/u7eTyfIUCf8aaDKgC2xW+/fUYTggA9E7EVBD7r443iXPt4zbeMpyzx5xo3QMhNeKmeDYSPm1KmXsbgHLIXr/JQPNGSMrVbRytHSiCjo/nvxSnaLtk+mKDwo+4xvu7egFBq970uTQyjIYxbDoB+bkfulTyQXzjZsiXyYZl3ryV7oRcXW4tkEeY71yZ/S09NIYf+58BjksS8il79b8YBKOsyvBVPFXQtyCXleZnSgwsDNThGpY7gUgo6Wa9xh+Xsf6mdNVl1D8KZSC/ktF8EAZj1JLo/kW0=
+before_deploy:
+- curl -fSL "https://releases.hashicorp.com/terraform/0.6.15/terraform_0.9.5_linux_amd64.zip"
+  -o terraform.zip
+- sudo unzip terraform.zip -d /opt/terraform
+- sudo ln -s /opt/terraform/terraform /usr/bin/terraform
+- rm -f terraform.zip
+deploy:
+- provider: script
+  skip_cleanup: true
+  script: ./deploy.sh
+  on:
+    repo: conor123/t2
+    branch: master
